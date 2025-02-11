@@ -55,11 +55,11 @@ export const AuthProvider = ({ children }) => {
                 setLoading(false);
                 return;
             }
-
+    
             const res = await verifyTokenRequest(token);
-            if (res.data) {
+            if (res.data && res.data.user) { // Asegurar que contiene la información del usuario
                 setIsAuthenticated(true);
-                setUser(res.data);
+                setUser(res.data.user); // Asegurarse de extraer correctamente la info del usuario
             } else {
                 localStorage.removeItem('token');
                 setIsAuthenticated(false);
@@ -74,6 +74,7 @@ export const AuthProvider = ({ children }) => {
             setLoading(false);
         }
     };
+    
 
     useEffect(() => {
         verificarToken();

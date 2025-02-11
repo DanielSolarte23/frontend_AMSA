@@ -1,14 +1,20 @@
+
 import BarraLateral from "@/app/components/BarraLateral";
 import NavBar from "@/app/components/NavBar";
 
 export default function AdminLayout({ children }) {
   return (
-    <body className="w-full h-screen">
+    <div className="w-full">
       <NavBar />
-      <main className="h-5/6 flex">
+      <main className="flex">
         <BarraLateral />
-        {children}
+        <section className="w-full justify-end">
+          <main className="flex">
+            <div className="w-1/6"></div>
+            <div className="w-5/6">{children}</div>
+          </main>
+        </section>
       </main>
-    </body>
+    </div>
   );
 }

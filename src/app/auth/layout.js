@@ -7,22 +7,18 @@ import { VisitasProvider } from "@/app/context/visitasContex";
 
 export default function AuthLayout({ children }) {
     return (
-        <html lang="es">
-            <body>
-                <RutasProtegidas>
-                    <UsuariosProvider>
-                        <ApartamentosProvider>
-                            <InformesProvider>
-                                <PagosProvider>
-                                    <VisitasProvider>
-                                        {children}
-                                    </VisitasProvider>
-                                </PagosProvider>
-                            </InformesProvider>
-                        </ApartamentosProvider>
-                    </UsuariosProvider>
-                </RutasProtegidas>
-            </body>
-        </html>
+        <RutasProtegidas>
+            <UsuariosProvider>
+                <ApartamentosProvider>
+                    <InformesProvider>
+                        <PagosProvider>
+                            <VisitasProvider>
+                                {children}
+                            </VisitasProvider>
+                        </PagosProvider>
+                    </InformesProvider>
+                </ApartamentosProvider>
+            </UsuariosProvider>
+        </RutasProtegidas>
     );
 }

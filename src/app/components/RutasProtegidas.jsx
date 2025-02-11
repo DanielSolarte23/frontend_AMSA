@@ -1,23 +1,20 @@
 "use client";
 import { useAuth } from "@/app/context/autenticacionContext";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export default function RutasProtegidas({ children }) {
   const { isAuthenticated, loading } = useAuth();
   const router = useRouter();
-  const [isChecking, setIsChecking] = useState(true);
 
   useEffect(() => {
-    if (!loading) {
-      setIsChecking(false);
-      if (!isAuthenticated) {
-        router.replace('/inicio');
-      }
+    // Esperar a que loading sea false antes de hacer la redirección
+    if (!loading && isAuthenticated === false) {
+      router.push('/inicio');
     }
   }, [isAuthenticated, loading, router]);
 
-  if (loading || isChecking) {
+  if (loading) {
     return (
       <div className="flex flex-col gap-2 justify-center items-center h-screen">
         <div className="animate-spin rounded-full h-20 w-20 border-2 border-l-4 border-verde"></div>
@@ -26,5 +23,9 @@ export default function RutasProtegidas({ children }) {
     );
   }
 
-  return isAuthenticated ? children : null;
+  if (!isAuthenticated) {
+    return null;
+  }
+
+  return <>{children}</>;
 }
