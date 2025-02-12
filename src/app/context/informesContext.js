@@ -1,13 +1,14 @@
 'use client'
 import { useState, useContext, createContext } from "react";
 
-import {
+import { 
   createInformeRequest,
   getInformeRequest,
   getInformesRequest,
   deleteInformeRequest,
   updateInformeRequest,
 } from "../api/informes";
+
 
 const InformesContext = createContext();
 
@@ -23,23 +24,34 @@ export const useInformes = () => {
 
 export function InformesProvider({ children }) {
   const [informes, setInformes] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState(null);
+
+  const handleError = (error, defaultMessage) => {
+    setErrors(error.response?.data?.message || defaultMessage);
+    console.log(error);
+  };
 
   const getInformes = async () => {
+    setLoading(true);
     try {
       const res = await getInformesRequest();
       setInformes(res.data);
     } catch (error) {
+      handleError(error, "Error al cargar informes");
       console.log(error);
+    } finally{
+      setLoading(false);
     }
   };
 
   const createInforme = async (informe) => { 
     try {
       const res = await createInformeRequest(informe);
-      console.log(res);
+      setInformes((prev) => [...prev, res.data]);
     } catch (error) {
-      console.error('Error:', error.response ? error.response.data : error.message);
       console.log(error);
+      handleError(error, "Error al crear informe");
     }
   };
   
@@ -48,8 +60,11 @@ export function InformesProvider({ children }) {
   const deleteInforme = async (id) => {
     try {
       const res = await deleteInformeRequest(id);
-      if (res.status === 204) setInformes(informes.filter((informe) => informe._id !== id));
+      if (res.status === 204) {
+        setInformes((prev) => prev.filter((informe) => informe._id !== id));
+      }
     } catch (error) {
+      handleError(error, "Error al eliminar informe");
       console.log(error);
     }
   };
@@ -59,14 +74,18 @@ export function InformesProvider({ children }) {
       const res = await getInformeRequest(id);
       return res.data;
     } catch (error) {
-      console.log(error);
+      handleError(error, "Error al obtener informe");
     }
   };
 
   const updateInforme = async (id, informe) => {
     try {
       await updateInformeRequest(id, informe);
+      setInformes((prev) =>
+        prev.map((item) => (item._id === id ? { ...item, ...informe } : item))
+      );
     } catch (error) {
+      handleError(error, "Error al actualizar informe");
       console.log(error);
     }
   };
@@ -80,6 +99,8 @@ export function InformesProvider({ children }) {
         deleteInforme,
         getInformes,
         updateInforme,
+        loading,
+        errors,
       }}
     >
       {children}

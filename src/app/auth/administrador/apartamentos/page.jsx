@@ -9,7 +9,7 @@ export default function ApartamentosComponent() {
     createApartamentos,
     deleteApartamento,
     updateApartamento,
-  } = useApartamentos();
+  } = useApartamentos(); 
 
   const [form, setForm] = useState({
     nroApto: "",
