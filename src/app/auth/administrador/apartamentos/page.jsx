@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState } from "react";
 import { useApartamentos } from "@/app/context/apartamentosContext";
+import { useUsuarios } from "@/app/context/usuariosContext";
 
 export default function ApartamentosComponent() {
   const {
@@ -9,7 +10,9 @@ export default function ApartamentosComponent() {
     createApartamentos,
     deleteApartamento,
     updateApartamento,
-  } = useApartamentos(); 
+  } = useApartamentos();
+
+  const { propietarios, getPropietarios } = useUsuarios();
 
   const [form, setForm] = useState({
     nroApto: "",
@@ -22,6 +25,7 @@ export default function ApartamentosComponent() {
 
   useEffect(() => {
     getApartamentos();
+    getPropietarios();
   }, []);
 
   const handleChange = (e) => {
@@ -94,15 +98,19 @@ export default function ApartamentosComponent() {
             <option value="desocupado">Desocupado</option>
             <option value="ocupado">Ocupado</option>
           </select>
-          <input
-            type="number"
+          <select
             name="propietarioId"
             value={form.propietarioId}
             onChange={handleChange}
-            placeholder="ID del Propietario"
-            className="w-full px-2 py-4 border rounded border-gray-600 bg-gray-100 dark:bg-gray-800"
-            required
-          />
+            className="w-full px-2 py-4 border rounded border-gray-600 bg-gray-100 dark:bg-gray-800">
+
+            <option value="">Seleccione el propietario</option>
+            {propietarios.map((propietario) => (
+              <option key={propietario.id} value={propietario.id}>
+                {propietario.nombre} {propietario.apellido}
+              </option>
+            ))}
+          </select>
           <button type="submit" className="w-full bg-blue-500 text-white px-2 py-4 rounded">
             {editId ? "Actualizar" : "Registrar"}
           </button>
@@ -131,7 +139,7 @@ export default function ApartamentosComponent() {
                 <td className="border border-gray-700 p-2">{apt.nroApto}</td>
                 <td className="border border-gray-700 p-2">{apt.torre}</td>
                 <td className="border border-gray-700 p-2">{apt.estado}</td>
-                <td className="border border-gray-700 p-2">{apt.propietarioId}</td>
+                <td className="border border-gray-700 p-2">{apt.Usuario?.nombre || "sin propietario"}</td>
                 <td className="border border-gray-700 p-2 flex gap-2 justify-center">
                   <button
                     className="bg-yellow-500 text-white px-3 py-1 rounded"

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useInformes } from "@/app/context/informesContext";
+import { useUsuarios } from "@/app/context/usuariosContext";
 
 function InformesAdmin() {
   const {
@@ -14,6 +15,11 @@ function InformesAdmin() {
     errors
   } = useInformes();
 
+  const {
+    usuarios,
+    getUsuarios,
+  } = useUsuarios();
+
   const [form, setForm] = useState({
     asunto: "",
     descripcion: "",
@@ -24,6 +30,7 @@ function InformesAdmin() {
 
   useEffect(() => {
     getInformes();
+    getUsuarios();
   }, []);
 
   const handleChange = (e) => {
@@ -61,7 +68,7 @@ function InformesAdmin() {
   };
 
   return (
-    <div className="p-4 max-w-5xl mx-auto">
+    <div className="p-4  mx-auto">
       <div className="h-screen flex flex-col justify-center items-center">
         <h2 className="text-2xl font-bold mb-4">
           {editId ? "Editar Informe" : "Registrar Informe"}
@@ -84,15 +91,20 @@ function InformesAdmin() {
             className="w-full px-2 py-4 border rounded border-gray-600 bg-gray-100 dark:bg-gray-800"
             required
           />
-          <input
-            type="number"
+          <select
             name="usuarioId"
             value={form.usuarioId}
             onChange={handleChange}
-            placeholder="ID del usuario"
             className="w-full px-2 py-4 border rounded border-gray-600 bg-gray-100 dark:bg-gray-800"
             required
-          />
+          >
+            <option value="">Seleccionar Remitente</option>
+            {usuarios.map((usuario) => (
+              <option key={usuario.id} value={usuario.id}>
+                {usuario.nombre}
+              </option>
+            ))}
+          </select>
           <button type="submit" className="w-full bg-blue-500 text-white px-2 py-4 rounded">
             {editId ? "Actualizar" : "Registrar"}
           </button>
@@ -119,7 +131,7 @@ function InformesAdmin() {
                 <td className="border border-gray-700 p-2">{informe.id}</td>
                 <td className="border border-gray-700 p-2">{informe.asunto}</td>
                 <td className="border border-gray-700 p-2">{informe.descripcion}</td>
-                <td className="border border-gray-700 p-2">{informe.usuarioId}</td>
+                <td className="border border-gray-700 p-2">{informe.Usuario?.nombre || "sin remitente"}</td>
                 <td className="border border-gray-700 p-2 flex gap-2 justify-center">
                   <button
                     className="bg-yellow-500 text-white px-3 py-1 rounded"

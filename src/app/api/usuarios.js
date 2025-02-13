@@ -2,6 +2,8 @@ import axios from "./axios";
 
 export const getUsuariosRequest = () => axios.get('/usuarios');
 
+export const getPropietariosRequest = () => axios.get('/propietarios');
+
 export const getUsuarioRequest = (id) => axios.get(`/usuarios/${id}`);
 
 export const createUsuarioRequest = (usuario) => axios.post('/usuarios', usuario);

@@ -31,7 +31,7 @@ function BarraLateral() {
                         <span className="mx-4 font-medium">Apartamentos</span>
                     </Link>
 
-                    <Link className={`flex items-center px-4 py-2 mt-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700 ${pathname === "/auth/administrador/usuarios" ? 'bg-gray-200 dark:bg-gray-800' : 'bg-white dark:bg-gray-900'}`} href="/auth/administrador/usuarios">
+                    <Link className={`flex items-center px-4 py-2 mt-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700 ${pathname === "/auth/administrador/usuarios" ? 'bg-gray-200 dark:bg-gray-800' : 'bg-white dark:bg-gray-900'}`} href="/auth/administrador/propietarios">
                         <i className="fa-solid fa-building-user"></i>
 
                         <span className="mx-4 font-medium">Propietarios</span>
@@ -47,10 +47,15 @@ function BarraLateral() {
 
                         <span className="mx-4 font-medium">Informes</span>
                     </Link>
-                    <Link className={`flex items-center px-4 py-2 mt-2 mb-4 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700 ${pathname === "/auth/administrador/pagos" ? 'bg-gray-200 dark:bg-gray-800' : 'bg-white dark:bg-gray-900'}`} href="/auth/administrador/pagos">
+                    <Link className={`flex items-center px-4 py-2 mt-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700 ${pathname === "/auth/administrador/pagos" ? 'bg-gray-200 dark:bg-gray-800' : 'bg-white dark:bg-gray-900'}`} href="/auth/administrador/pagos">
                         <i className="fa-solid fa-sack-dollar"></i>
 
                         <span className="mx-4 font-medium">Pagos</span>
+                    </Link>
+                    <Link className={`flex items-center px-4 py-2 mt-2 mb-4 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700 ${pathname === "/auth/administrador/usuarios" ? 'bg-gray-200 dark:bg-gray-800' : 'bg-white dark:bg-gray-900'}`} href="/auth/administrador/usuarios">
+                        <i className="fa-solid fa-users"></i>
+
+                        <span className="mx-4 font-medium">Usuarios</span>
                     </Link>
 
                     <hr />

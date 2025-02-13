@@ -6,7 +6,7 @@ function PerfilAdmin() {
   const { user } = useAuth()
 
   return (
-    <div className='w-full flex h-full'>
+    <div className='w-full flex h-full mt-20'>
       <div className='w-1/3 flex flex-col items-center justify-center px-2 ml-10'>
         <img className="object-cover w-48 h-48 mx-2 rounded-full" src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="avatar" />
         <input className='mt-10' type="file" />

@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { useVisitas } from '@/app/context/visitasContex';
+import { useApartamentos } from '@/app/context/apartamentosContext';
 
 function VisitantesAdmin() {
   const {
@@ -10,6 +11,11 @@ function VisitantesAdmin() {
     deleteVisitas,
     updateVisita,
   } = useVisitas();
+
+  const {
+    apartamentos,
+    getApartamentos,
+  } = useApartamentos();
 
   const [form, setForm] = useState({
     nombre: "",
@@ -23,6 +29,7 @@ function VisitantesAdmin() {
 
   useEffect(() => {
     getVisitas();
+    getApartamentos();
   }, []);
 
   const handleChange = (e) => {
@@ -62,6 +69,7 @@ function VisitantesAdmin() {
 
   return (
     <div className="p-4 max-w-5xl mx-auto">
+      <div className='h-5'></div>
       <div className="h-screen flex flex-col justify-center items-center">
         <h2 className="text-2xl font-bold mb-4">
           {editId ? "Editar Visita" : "Registrar Visita"}
@@ -104,15 +112,20 @@ function VisitantesAdmin() {
             required
           />
 
-          <input
-            type="number"
+          <select
             name="apartamentoId"
             value={form.apartamentoId}
             onChange={handleChange}
-            placeholder="ID del Apartamento"
             className="w-full px-2 py-4 border rounded border-gray-600 bg-gray-100 dark:bg-gray-800"
             required
-          />
+          >
+            <option value="">Seleccione el apartamento</option>
+            {apartamentos.map((apartamento) => (
+              <option key={apartamento.id} value={apartamento.id}>
+                apartamento: {apartamento.nroApto} torre: {apartamento.torre}
+              </option>
+            ))}
+          </select>
           <button type="submit" className="w-full bg-blue-500 text-white px-2 py-4 rounded">
             {editId ? "Actualizar" : "Registrar"}
           </button>
@@ -132,6 +145,7 @@ function VisitantesAdmin() {
               <th className="border border-gray-700 p-2">Documento</th>
               <th className="border border-gray-700 p-2">Telefono</th>
               <th className="border border-gray-700 p-2">Apartamento</th>
+              <th className="border border-gray-700 p-2">Torre</th>
               <th className="border border-gray-700 p-2">Acciones</th>
             </tr>
           </thead>
@@ -143,7 +157,8 @@ function VisitantesAdmin() {
                 <td className="border border-gray-700 p-2">{visita.apellido}</td>
                 <td className="border border-gray-700 p-2">{visita.documento}</td>
                 <td className="border border-gray-700 p-2">{visita.telefono}</td>
-                <td className="border border-gray-700 p-2">{visita.apartamentoId}</td>
+                <td className="border border-gray-700 p-2">{visita.Apartamento?.nroApto || "No se registro apartamento"}</td>
+                <td className="border border-gray-700 p-2">{visita.Apartamento?.torre || "No se registro apartamento"}</td>
                 <td className="border border-gray-700 p-2 flex gap-2 justify-center">
                   <button
                     className="bg-yellow-500 text-white px-3 py-1 rounded"

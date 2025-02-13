@@ -1,5 +1,5 @@
 
-import BarraLateralSeguridad from "@/app/components/BarraLateralSeguridad";
+import BarraLateralPropietario from "@/app/components/BarraPropietario";
 import NavBar from "@/app/components/NavBar";
 
 export default function SeguridadLayout({ children }) {
@@ -7,7 +7,7 @@ export default function SeguridadLayout({ children }) {
     <div className="w-full">
       <NavBar />
       <main className="flex">
-        <BarraLateralSeguridad />
+        <BarraLateralPropietario />
         <section className="w-full justify-end">
           <main className="flex">
             <div className="w-1/6"></div>

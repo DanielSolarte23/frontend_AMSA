@@ -50,6 +50,7 @@ export function PagosProvider({ children }) {
       setPagos((prev) => [...prev, res.data]);
     } catch (error) {
       handleError(error, "Error al cargar el pago")
+      console.log(error);
     }
   };
   
@@ -63,6 +64,7 @@ export function PagosProvider({ children }) {
       }
     } catch (error) {
       handleError(error, "Error al eliminar el pago")
+      console.log(error);
     }
   };
 
@@ -72,6 +74,7 @@ export function PagosProvider({ children }) {
       return res.data;
     } catch (error) {
       handleError(error, "Error al obtener el pago")
+      console.log(error);
     }
   };
 

@@ -5,6 +5,7 @@ import {
   createUsuarioRequest,
   getUsuarioRequest,
   getUsuariosRequest,
+  getPropietariosRequest,
   deleteUsuarioRequest,
   updateUsuarioRequest,
 } from "../api/usuarios";
@@ -23,6 +24,7 @@ export const useUsuarios = () => {
 
 export function UsuariosProvider({ children }) {
   const [usuarios, setUsuarios] = useState([]);
+  const [propietarios, setPropietarios] = useState([]);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState(null);
 
@@ -38,6 +40,19 @@ export function UsuariosProvider({ children }) {
       setUsuarios(res.data);
     } catch (error) {
       handleError(error, "Error al cargaar usuarios")
+      console.log(error);
+    } finally {
+      setLoading(false)
+    }
+  };
+
+  const getPropietarios = async () => {
+    setLoading(true);
+    try {
+      const res = await getPropietariosRequest();
+      setPropietarios(res.data);
+    } catch (error) {
+      handleError(error, "Error al cargar los Propietarios")
       console.log(error);
     } finally {
       setLoading(false)
@@ -83,7 +98,7 @@ export function UsuariosProvider({ children }) {
       await updateUsuarioRequest(id, usuario);
       setUsuarios((prev) =>
         prev.map((item) => (item._id === id ? { ...item, ...usuario } : item))
-    );
+      );
     } catch (error) {
       handleError(error, "Error al actualizar usuario");
       console.log(error);
@@ -98,6 +113,8 @@ export function UsuariosProvider({ children }) {
         getUsuario,
         deleteUsuarios,
         getUsuarios,
+        getPropietarios,
+        propietarios,
         updateUsuario,
         loading,
         errors,

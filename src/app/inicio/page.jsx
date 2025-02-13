@@ -11,7 +11,7 @@ function Inicio() {
 
   const { register, handleSubmit, formState: { errors } } = useForm()
 
-  const { inicio, errors: signErrors, isAuthenticated } = useAuth()
+  const { inicio, errors: signErrors, isAuthenticated, user } = useAuth()
 
   const onSubmit = handleSubmit((data) => {
     inicio(data)
@@ -20,8 +20,22 @@ function Inicio() {
   const router = useRouter()
 
   useEffect(() => {
-    if (isAuthenticated) router.push("/auth/administrador")
-  }, [isAuthenticated, router])
+    if (isAuthenticated && user) {
+      switch (user.rol) {
+        case "administrador":
+          router.push("/auth/administrador");
+          break;
+        case "vigilante":
+          router.push("/auth/seguridad");
+          break;
+        case "propietario":
+          router.push("/auth/propietarios");
+          break;
+        default:
+          router.push("/");
+      }
+    }
+  }, [isAuthenticated, user, router]);
 
   return (
     <section className="bg-white dark:bg-gray-900">
@@ -72,8 +86,8 @@ function Inicio() {
             </button>
 
             <div className="mt-6 text-center ">
-              <p href="#" className="text-sm text-white hover:underline dark:text-white">
-                No tiene una cuenta? <Link className="text-blue-500 hover:underline dark:text-blue-400" href="/registro">Regístrate</Link>
+              <p className="text-sm text-white dark:text-white">
+                No tiene una cuenta? <Link className="text-blue-500  dark:text-blue-400" href="/registro">Regístrate</Link>
               </p>
             </div>
           </div>
